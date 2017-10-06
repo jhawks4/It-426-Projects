@@ -26,8 +26,13 @@ public class CalculatorUI extends Application {
 
     private static final int BUTTON_SPACING = 10; //Constant variable that is used for spacing buttons and textfield.
     private static final int ENTER = 13;          //Constant variable for the index holding the enter button.
-    private static final int ZERO = 12;            //Constant variable for the index holding the number zero button.
-    private static final int DIVIDE_SYMBOL = 14;   //Constant variable for the index holding the division symbol button.
+    private static final int ZERO = 12;           //Constant variable for the index holding the number zero button.
+    private static final int DIVIDE_SYMBOL = 14;  //Constant variable for the index holding the division symbol button.
+
+    //A string array that provides the text for the buttons.
+    private static final String[] BUTTON_NAMES = {"7", "8", "9", "+", "4", "5", "6",
+                                                 "-", "1", "2", "3", "*", "0", "Enter",
+                                                 "/"};
 
     /**
      * This method is used to set the scene and display that scene.
@@ -65,13 +70,13 @@ public class CalculatorUI extends Application {
 
     }
 
+    /**
+     * This method is used to create the calculator layout.
+     *
+     * @return The method returns a scene object
+     */
     //Provides the layout for the scene object.
-    private Scene calculatorLayout(){
-
-        //A string array that provides the text for the buttons.
-        String[] buttonNames = {"7", "8", "9", "+", "4", "5", "6",
-                "-", "1", "2", "3", "*", "0", "Enter",
-                "/"};
+    public Scene calculatorLayout(){
 
         //Initializing button array that will be used to hold the calculator buttons.
         Button[] calculatorButtons;
@@ -97,7 +102,7 @@ public class CalculatorUI extends Application {
         bottomCalculatorControls.setSpacing(BUTTON_SPACING);
 
         //Calls method that provides buttons to button array.
-        calculatorButtons = makeButtons(buttonNames, buttonNames.length);
+        calculatorButtons = makeButtons(BUTTON_NAMES, BUTTON_NAMES.length);
 
         //Sets the id of the button.
         calculatorButtons[ENTER].setId("enterButton");
