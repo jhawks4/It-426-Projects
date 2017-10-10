@@ -7,6 +7,7 @@
 */
 package ui;
 
+import calculator.Calculator;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -33,6 +34,12 @@ public class CalculatorUI extends Application {
     private static final String[] BUTTON_NAMES = {"7", "8", "9", "+", "4", "5", "6",
                                                  "-", "1", "2", "3", "*", "0", "Enter",
                                                  "/"};
+
+    private Calculator controller = new Calculator();
+
+    public CalculatorUI(){
+
+    }
 
     /**
      * This method is used to set the scene and display that scene.

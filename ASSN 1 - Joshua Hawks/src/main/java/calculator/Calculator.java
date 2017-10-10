@@ -6,6 +6,19 @@
 */
 package calculator;
 
+import ui.CalculatorUI;
+
 public class Calculator{
+
+    private double primaryNumber;
+    private double secondaryNumber;
+
+    private CalculatorUI view = new CalculatorUI();
+
+    public Calculator(){
+
+    }
+
+
 
 }
