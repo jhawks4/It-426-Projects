@@ -6,6 +6,7 @@
 */
 package launcher;
 
+import calculator.Calculator;
 import javafx.application.Application;
 import ui.CalculatorUI;
 

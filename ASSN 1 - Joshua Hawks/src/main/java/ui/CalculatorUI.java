@@ -9,13 +9,15 @@ package ui;
 
 import calculator.Calculator;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import java.io.File;
+
 
 /**
  * This class represents the calculator GUI.
@@ -26,20 +28,57 @@ import java.io.File;
 public class CalculatorUI extends Application {
 
     private static final int BUTTON_SPACING = 10; //Constant variable that is used for spacing buttons and textfield.
-    private static final int ENTER = 13;          //Constant variable for the index holding the enter button.
-    private static final int ZERO = 12;           //Constant variable for the index holding the number zero button.
-    private static final int DIVIDE_SYMBOL = 14;  //Constant variable for the index holding the division symbol button.
 
-    //A string array that provides the text for the buttons.
-    private static final String[] BUTTON_NAMES = {"7", "8", "9", "+", "4", "5", "6",
-                                                 "-", "1", "2", "3", "*", "0", "Enter",
-                                                 "/"};
+    //Constants for my number keys.
+    private enum NumberButtons {
+        ONE("1", 1.0, 8), TWO("2", 2.0, 9), THREE("3", 3.0, 10), FOUR("4", 4.0, 4), FIVE("5", 5.0, 5),
+        SIX("6", 6.0, 6), SEVEN("7", 7.0, 0), EIGHT("8", 8.0, 1), NINE("9", 9.0, 2), ZERO("0", 0.0, 12);
 
-    private Calculator controller = new Calculator();
+        private double value;
+        private String keyName;
+        private int keyGridLocation;
 
-    public CalculatorUI(){
+        NumberButtons(String keyName, double value, int keyGridLocation){
+
+            this.keyName = keyName;
+            this.value = value;
+            this.keyGridLocation = keyGridLocation;
+        }
+    }
+
+    //Constants for my operator keys.
+    private enum OperatorButtons{
+
+        PLUS("+", 3), MINUS("-", 7), MULTIPLY("*", 11), ENTER("Enter", 13),
+        CLEAR("Clear", 14), DIVIDE("/", 15), SQUARED("x^2", 16),
+        CUBED("x^3", 17), POWER("x^y", 18), PERCENTAGE("%", 19);
+
+        private String keyName;
+        private int keyGridLocation;
+
+        OperatorButtons(String keyName, int keyGridLocation){
+            this.keyName = keyName;
+            this.keyGridLocation = keyGridLocation;
+        }
 
     }
+
+    //Provides a way to manipulate the event handler using arrays.
+    private class SetOnActionIndex {
+        private final int index;
+
+        private SetOnActionIndex(int index){
+            this.index = index;
+        }
+
+        //Gets the index for the arrays in the event handler.
+        public int getIndex(){
+            return index;
+        }
+    }
+
+    //A controller to do the calculations for the calculator.
+    private Calculator controller = new Calculator();
 
     /**
      * This method is used to set the scene and display that scene.
@@ -49,75 +88,51 @@ public class CalculatorUI extends Application {
     @Override
     public void start(Stage stage) {
 
-        //A try catch block to ensure that if we fail to get our CSS files, then it displays an error in the console.
-        try{
+        //Initializing a scene object.
+        Scene myScene = calculatorLayout();
 
-            //Initializing a scene object.
-            Scene myScene = calculatorLayout();
+        //Adding CSS nodes into the scene.
+        myScene.getStylesheets()
+                .addAll("css/calculatorCSS.css",
+                        "https://fonts.googleapis.com/css?family=Pangolin");
 
-            //Adding CSS nodes into the scene.
-            myScene.getStylesheets()
-                    .addAll(new File("src/css/calculatorCSS.css").toURI().toURL().toString(),
-                                            "https://fonts.googleapis.com/css?family=Pangolin");
+        //Sets the title of the application window.
+        stage.setTitle("Calculator");
 
-            //Sets the title of the application window.
-            stage.setTitle("Calculator");
+        //Sets the scene object that will be displayed.
+        stage.setScene(myScene);
 
-            //Sets the cene object that will be displayed.
-            stage.setScene(myScene);
-
-            //Displays the scene object.
-            stage.show();
-
-        }catch (Exception fileException){
-
-            //Error message.
-            System.out.println("This is the error: " + fileException.getMessage());
-        }
+        //Displays the scene object.
+        stage.show();
 
     }
 
-    /**
-     * This method is used to create the calculator layout.
-     *
-     * @return The method returns a scene object
-     */
     //Provides the layout for the scene object.
-    public Scene calculatorLayout(){
+    private Scene calculatorLayout(){
 
         //Initializing button array that will be used to hold the calculator buttons.
         Button[] calculatorButtons;
+        TextField screen = new TextField();
 
         //Instantiating Vbox, Hboxes, GridPane, and TextField objects.
         VBox vBox = new VBox();
         HBox calculatorScreen = new HBox();
-        HBox bottomCalculatorControls = new HBox();
         GridPane calculatorControls = new GridPane();
-        TextField screen = new TextField();
 
         //Sets alignment for buttons and textfield.
         screen.setAlignment(Pos.CENTER_RIGHT);
         vBox.setAlignment(Pos.CENTER);
         calculatorControls.setAlignment(Pos.CENTER);
-        bottomCalculatorControls.setAlignment(Pos.CENTER);
         calculatorScreen.setAlignment(Pos.CENTER);
 
         //Sets the spacing between buttons and textfield.
         vBox.setSpacing(BUTTON_SPACING);
         calculatorControls.setVgap(BUTTON_SPACING);
         calculatorControls.setHgap(BUTTON_SPACING);
-        bottomCalculatorControls.setSpacing(BUTTON_SPACING);
 
         //Calls method that provides buttons to button array.
-        calculatorButtons = makeButtons(BUTTON_NAMES, BUTTON_NAMES.length);
-
-        //Sets the id of the button.
-        calculatorButtons[ENTER].setId("enterButton");
-
-        //Hbox that is used to format the location of the bottom three buttons.
-        bottomCalculatorControls.getChildren().addAll(calculatorButtons[ZERO],
-                                                      calculatorButtons[ENTER],
-                                                      calculatorButtons[DIVIDE_SYMBOL]);
+        calculatorButtons = makeButtons(NumberButtons.values(), NumberButtons.values().length,
+                OperatorButtons.values(), OperatorButtons.values().length, screen);
 
         //Calls a method for adding upper buttons of the calculator to the gridpane.
         addingFirstTwelveUpperButtons(calculatorControls, calculatorButtons);
@@ -128,21 +143,84 @@ public class CalculatorUI extends Application {
         //Adds the textfield to the Hbox.
         calculatorScreen.getChildren().add(screen);
 
-        //Adds the gridpane and two Hboxes to the Vbox.
-        vBox.getChildren().addAll(calculatorControls, bottomCalculatorControls, calculatorScreen);
+        //buttonAction(calculatorButtons, screen);
 
-        return new Scene(vBox, 260, 230);
+
+        //Adds the gridpane and two Hboxes to the Vbox.
+        vBox.getChildren().addAll(calculatorControls, calculatorScreen);
+
+        return new Scene(vBox, 330, 300);
     }
 
     //A method that returns an array of buttons.
-    private Button[] makeButtons(String[] buttons, int size){
+    private Button[] makeButtons(NumberButtons[] numberButtons, int numberButtonsLength,
+                                 OperatorButtons[] operatorButtons, int operatorButtonLength, TextField screen){
+
+        int buttonArrayLength = numberButtonsLength + operatorButtonLength; //Used to set the size of the temp array.
+        int indexForOperator = 0; //Index for outer array.
 
         //Temporary button array.
-        Button[] tempButtons = new Button[size];
+        Button[] tempButtons = new Button[buttonArrayLength];
 
-        //Used to make new buttons with the correct names.
-        for (int i = 0; i < size; i++){
-            tempButtons[i] = new Button(buttons[i]);
+        //Used to make new number buttons with the correct names and set their events.
+        for(int i = 0; i < numberButtonsLength; i++){
+            SetOnActionIndex index = new SetOnActionIndex(i);
+            tempButtons[numberButtons[i].keyGridLocation] = new Button(numberButtons[i].keyName);
+
+            //Provides the data to the numerical data to the Calculator class.
+            tempButtons[numberButtons[i].keyGridLocation].setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    controller.setTextAndNumericalValue(numberButtons[index.getIndex()].keyName,
+                                                           numberButtons[index.getIndex()].value);
+                    screen.setText(controller.getInputText());
+                }
+            });
+        }
+
+        //Used to make new operator buttons and set their events.
+        for(int i = 0; i < buttonArrayLength; i++){
+            if(tempButtons[i] == null){
+                SetOnActionIndex index = new SetOnActionIndex(indexForOperator);
+                tempButtons[operatorButtons[indexForOperator].keyGridLocation] =
+                        new Button(operatorButtons[indexForOperator].keyName);
+                tempButtons[operatorButtons[indexForOperator].keyGridLocation].
+                        setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                //Provides unique controls to certain operator keys.
+                                if(operatorButtons[index.getIndex()].keyName == "Enter"){
+                                    controller.enter(controller.getPrimaryNumber(),
+                                                     controller.getSecondaryNumber(),
+                                                     controller.getOperator());
+                                    controller.setAfterEnter(controller.getAnswer());
+                                    screen.setText(controller.getInputText());
+                                }else if(operatorButtons[index.getIndex()].keyName == "Clear"){
+                                    screen.setText(controller.clearScreen());
+                                    controller.clearAll();
+                                }else if(operatorButtons[index.getIndex()].keyName == "x^2"){
+                                    screen.setText(controller.clearScreen());
+                                    controller.squared();
+                                    controller.setAfterEnter(controller.getAnswer());
+                                    screen.setText(controller.getInputText());
+                                }else if(operatorButtons[index.getIndex()].keyName == "x^3"){
+                                    screen.setText(controller.clearScreen());
+                                    controller.cubed();
+                                    controller.setAfterEnter(controller.getAnswer());
+                                    screen.setText(controller.getInputText());
+                                }else if(operatorButtons[index.getIndex()].keyName == "%"){
+                                    screen.setText(controller.clearScreen());
+                                    controller.percentile();
+                                    controller.setAfterEnter(controller.getAnswer());
+                                    screen.setText(controller.getInputText());
+                                }else{
+                                    controller.setOperator(operatorButtons[index.getIndex()].keyName);
+                                    screen.setText(controller.clearScreen());
+                                }
+                            }
+                        });
+                indexForOperator++;
+            }
         }
 
         return tempButtons;
@@ -155,8 +233,8 @@ public class CalculatorUI extends Application {
         int initialIndex = 0;
 
         //Adds each button to the correct position in the gridpane.
-        for (int row = 0; row <= 2; row++){
-            for (int column = 0; column <= 3; column++){
+        for(int row = 0; row < 5; row++){
+            for(int column = 0; column < 4; column++){
                 controlButtonGrid.add(controlButtons[initialIndex], column, row);
                 initialIndex++;
             }
