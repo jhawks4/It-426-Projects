@@ -36,15 +36,16 @@ public class JSONExporter implements IExporter {
     }
 
     private void exportJSON(){
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
         try {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
             jsonWriter = new FileWriter(file);
 
             String test = gson.toJson(parts);
             System.out.println(test);
 
             gson.toJson(parts, jsonWriter);
+
+            jsonWriter.close();
 
         }catch (IOException exception){
             System.out.println(exception.getMessage());

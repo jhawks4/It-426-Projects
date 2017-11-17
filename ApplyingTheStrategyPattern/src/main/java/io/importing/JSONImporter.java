@@ -1,14 +1,21 @@
 package io.importing;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 import io.IImporter;
+
 import model.CarPart;
 import model.PartsDatabase;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -38,15 +45,16 @@ public class JSONImporter implements IImporter{
 
     private void myparts(){
         try {
-            gson = new Gson();
-            reader = new FileReader(file);
-            CarPart aPart = gson.fromJson(reader, CarPart.class);
-            parts.add(aPart);
-            dataCopy.addPart(aPart);
+            gson = new GsonBuilder().setPrettyPrinting().create();
+            Reader reader = new FileReader(file);
 
-            for (CarPart parts : parts) {
-                System.out.println(parts);
-            }
+            //CarPart part = gson.fromJson(reader, CarPart.class);
+
+            JsonElement json = gson.fromJson(reader, JsonElement.class);
+            String jsonString = gson.toJson(json);
+
+
+            System.out.println(jsonString);
 
         }catch (IOException exception){
             System.out.println(exception.getMessage());

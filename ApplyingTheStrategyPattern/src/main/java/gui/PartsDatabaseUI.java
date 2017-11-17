@@ -4,6 +4,7 @@ import io.IExporter;
 import io.IImporter;
 import io.exporting.JSONExporter;
 import io.exporting.JavaExporter;
+import io.exporting.XMLExporter;
 import io.importing.JSONImporter;
 import io.importing.JavaImporter;
 import io.importing.XMLImporter;
@@ -231,6 +232,8 @@ public class PartsDatabaseUI extends Application
                         break;
 
                     case "XML":
+                        export = new XMLExporter();
+                        exporterRequest(export);
                         break;
                 }
             }
@@ -268,6 +271,7 @@ public class PartsDatabaseUI extends Application
 
                    case "XML":
                        imported = new XMLImporter();
+                       importerRequest(imported);
                        break;
                }
             }
