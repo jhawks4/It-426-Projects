@@ -2,6 +2,8 @@ package gui;
 
 import io.IExporter;
 import io.IImporter;
+import io.exporting.JSONExporter;
+import io.exporting.JavaExporter;
 import io.importing.JSONImporter;
 import io.importing.JavaImporter;
 import io.importing.XMLImporter;
@@ -44,11 +46,15 @@ public class PartsDatabaseUI extends Application
     private ToggleGroup importToggle;
 
     //Starting size of collection
-    private int initialSize;
+    private int initialSize = 0;
+    private int currentSize = 0;
 
     //Export and import
-    IExporter export;
-    IImporter imported;
+    private IExporter export;
+    private IImporter imported;
+
+    //String array for categories
+    private String[] carCategories;
 
     /**
      * Creates a new user interface object.
@@ -151,11 +157,21 @@ public class PartsDatabaseUI extends Application
         {
             public void handle(ActionEvent event)
             {
-                data.addPart(new CarPart(partId.getText(), manufacturer.getText(), 0, null));
+                if(initialSize == 0 && currentSize == 0 && data.getParts().size() != 0){
+                    initialSize = data.getParts().size();
+                    currentSize = data.getParts().size();
+                }
+                carCategories = categories.getText().split(", ");
+                data.addPart(new CarPart(partId.getText(), manufacturer.getText(),
+                                         Integer.parseInt(listPrice.getText()), carCategories));
+                currentSize++;
 
                 System.out.println(partId.getText());
                 System.out.println(manufacturer.getText());
-                System.out.println(data.getParts().size());
+                System.out.println(listPrice.getText());
+                String rejoinedCategories = String.join(", ", carCategories);
+                System.out.println(rejoinedCategories);
+                System.out.println(currentSize);
             }
         });
 
@@ -201,7 +217,22 @@ public class PartsDatabaseUI extends Application
         {
             public void handle(ActionEvent event)
             {
-                //...
+                RadioButton exportChoice = (RadioButton) exportToggle.getSelectedToggle();
+
+                switch (exportChoice.getText()){
+                    case "Java":
+                        export = new JavaExporter(data.getParts(), initialSize, currentSize);
+                        exporterRequest(export);
+                        break;
+
+                    case "JSON":
+                        export = new JSONExporter(data.getParts(), initialSize, currentSize);
+                        exporterRequest(export);
+                        break;
+
+                    case "XML":
+                        break;
+                }
             }
         });
 
@@ -226,11 +257,13 @@ public class PartsDatabaseUI extends Application
 
                switch (importedChoice.getText()){
                    case "Java":
-                       imported = new JavaImporter();
+                       imported = new JavaImporter(data);
+                       importerRequest(imported);
                        break;
 
                    case "JSON":
-                       imported = new JSONImporter();
+                       imported = new JSONImporter(data);
+                       importerRequest(imported);
                        break;
 
                    case "XML":
@@ -254,6 +287,23 @@ public class PartsDatabaseUI extends Application
         right.getChildren().addAll(exportHeader, exportRButtons, importHeader, importRButtons);
 
         return right;
+    }
+
+    private void exporterRequest(IExporter export){
+        if (export.exportParts()){
+            System.out.println("Size difference: " + (currentSize - initialSize));
+            System.out.println("File exported.");
+        }else{
+            System.out.println("Nothing was exported.");
+        }
+    }
+
+    private void importerRequest(IImporter importer){
+        if(imported.importParts()){
+            System.out.println("File was imported.");
+        }else {
+            System.out.println("Nothing was imported.");
+        }
     }
 
     //generates a simple button with a style

@@ -62,5 +62,11 @@ public class CarPart implements Serializable
         this.categories = categories;
     }
 
+    public String toString(){
+        String test = String.join(", ", categories);
+
+        return "ID: " + id + "\n" + "man: " + manufacturer + "\n" + "list Price: " + listPrice
+        + "\n" + "Categories: " + test + "\n";
+    }
 
 }
