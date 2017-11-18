@@ -1,16 +1,17 @@
+/*
+* Joshua Hawks
+* 11/17/2017
+* JSONEImporter.java
+* This file contains code.
+*/
+
 package io.importing;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
+import com.google.gson.*;
 import io.IImporter;
 
 import model.CarPart;
 import model.PartsDatabase;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -46,15 +47,15 @@ public class JSONImporter implements IImporter{
     private void myparts(){
         try {
             gson = new GsonBuilder().setPrettyPrinting().create();
-            Reader reader = new FileReader(file);
 
-            //CarPart part = gson.fromJson(reader, CarPart.class);
+            BufferedReader reader = new BufferedReader(new FileReader(file));
 
-            JsonElement json = gson.fromJson(reader, JsonElement.class);
-            String jsonString = gson.toJson(json);
+            CarPart[] part = gson.fromJson(reader, CarPart[].class);
 
-
-            System.out.println(jsonString);
+            for (CarPart parts : part) {
+                System.out.println(parts);
+                dataCopy.addPart(parts);
+            }
 
         }catch (IOException exception){
             System.out.println(exception.getMessage());

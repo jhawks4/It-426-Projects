@@ -1,3 +1,10 @@
+/*
+* Joshua Hawks
+* 11/17/2017
+* Launcher.java
+* This file contains code to run our application.
+*/
+
 package launcher;
 
 import gui.PartsDatabaseUI;

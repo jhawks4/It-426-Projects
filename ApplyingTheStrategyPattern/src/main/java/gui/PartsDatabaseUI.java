@@ -1,3 +1,10 @@
+/*
+* Joshua Hawks
+* 11/17/2017
+* PartsDatabaseUI.java
+* This file contains code for the gui and allows users to
+* interact with the various strategies employed in the application.
+*/
 package gui;
 
 import io.IExporter;
@@ -232,7 +239,7 @@ public class PartsDatabaseUI extends Application
                         break;
 
                     case "XML":
-                        export = new XMLExporter();
+                        export = new XMLExporter(data, initialSize, currentSize);
                         exporterRequest(export);
                         break;
                 }
@@ -270,7 +277,7 @@ public class PartsDatabaseUI extends Application
                        break;
 
                    case "XML":
-                       imported = new XMLImporter();
+                       imported = new XMLImporter(data);
                        importerRequest(imported);
                        break;
                }
