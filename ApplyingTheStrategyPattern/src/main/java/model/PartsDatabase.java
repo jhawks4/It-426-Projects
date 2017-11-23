@@ -11,31 +11,47 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
+/**
+ * Database class to hold data for files while the application is running.
+ *
+ * @author Josh Archer
+ * @version 1.0
+ */
 @XmlRootElement
-public class PartsDatabase
-{
+public class PartsDatabase {
     private Collection<CarPart> parts;
 
-    public PartsDatabase()
-    {
+    /**
+     * Constructor to create collection.
+     */
+    public PartsDatabase() {
         parts = new ArrayList<CarPart>();
     }
 
-    public void addPart(CarPart part)
-    {
+    /**
+     * Inserts a CarPart Object into the collection.
+     *
+     * @param part CarPart object data.
+     */
+    public void addPart(CarPart part) {
         parts.add(part);
     }
 
+    /**
+     * Gets the collection.
+     *
+     * @return Returns the private collection.
+     */
     @XmlElement
-    public Collection<CarPart> getParts()
-    {
-        return Collections.unmodifiableCollection(parts);
+    public Collection<CarPart> getParts() {
+        return parts;
     }
 
-    public void clear()
-    {
+    /**
+     * Removes all data from the database.
+     */
+    public void clear() {
         parts.clear();
     }
 

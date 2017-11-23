@@ -7,11 +7,15 @@
 
 package io;
 
-import model.CarPart;
+/**
+ * Interface for importing files.
+ */
+public interface IImporter {
 
-import java.util.Collection;
-
-public interface IImporter
-{
-    public boolean importParts();
+    /**
+     * Imports file data to the application.
+     *
+     * @return True if a file exists.
+     */
+    boolean importParts();
 }

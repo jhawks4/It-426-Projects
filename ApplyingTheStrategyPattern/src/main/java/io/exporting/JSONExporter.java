@@ -1,3 +1,10 @@
+/*
+* Joshua Hawks
+* 11/23/2017
+* Launcher.java
+* This file contains code to run our application.
+*/
+
 package io.exporting;
 
 import com.google.gson.Gson;
@@ -18,7 +25,7 @@ public class JSONExporter implements IExporter {
     private int initialSize;
     private int currentSize;
 
-    public JSONExporter(Collection<CarPart> parts, int initialSize, int currentSize){
+    public JSONExporter(Collection<CarPart> parts, int initialSize, int currentSize) {
         this.parts = parts;
         this.initialSize = initialSize;
         this.currentSize = currentSize;
@@ -26,7 +33,7 @@ public class JSONExporter implements IExporter {
 
     public boolean exportParts() {
 
-        if(initialSize == currentSize){
+        if (initialSize == currentSize) {
             return false;
         }
 
@@ -35,7 +42,7 @@ public class JSONExporter implements IExporter {
         return true;
     }
 
-    private void exportJSON(){
+    private void exportJSON() {
         try {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             jsonWriter = new FileWriter(file);
@@ -47,7 +54,7 @@ public class JSONExporter implements IExporter {
 
             jsonWriter.close();
 
-        }catch (IOException exception){
+        } catch (IOException exception) {
             System.out.println(exception.getMessage());
         }
     }

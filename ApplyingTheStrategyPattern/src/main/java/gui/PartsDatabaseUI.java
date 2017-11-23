@@ -36,8 +36,7 @@ import java.net.MalformedURLException;
  * @author Josh Archer
  * @version 1.0
  */
-public class PartsDatabaseUI extends Application
-{
+public class PartsDatabaseUI extends Application {
     private static final int SCENE_WIDTH = 500;
     private static final int SCENE_HEIGHT = 220;
 
@@ -67,8 +66,7 @@ public class PartsDatabaseUI extends Application
     /**
      * Creates a new user interface object.
      */
-    public PartsDatabaseUI()
-    {
+    public PartsDatabaseUI() {
         data = new PartsDatabase();
     }
 
@@ -77,16 +75,12 @@ public class PartsDatabaseUI extends Application
      *
      * @param stage the stage to display screens upon
      */
-    public void start(Stage stage)
-    {
+    public void start(Stage stage) {
         stage.setTitle("Parts Database");
 
-        try
-        {
+        try {
             stage.setScene(getScene());
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             throw new RuntimeException("Something went wrong: " + ex.getMessage());
         }
 
@@ -94,8 +88,7 @@ public class PartsDatabaseUI extends Application
     }
 
     //retrieves the primary scene for the parts database
-    private Scene getScene() throws MalformedURLException
-    {
+    private Scene getScene() throws MalformedURLException {
         //two primary panes on the left and right
         GridPane left = getLeftPane();
         VBox right = getRightPane();
@@ -104,7 +97,7 @@ public class PartsDatabaseUI extends Application
         GridPane parent = new GridPane();
         parent.setHgap(10);
         parent.setVgap(10);
-        parent.setPadding(new Insets(10,10,10,10));
+        parent.setPadding(new Insets(10, 10, 10, 10));
 
         //set the width of each side
         ColumnConstraints columnLeft = new ColumnConstraints();
@@ -128,13 +121,12 @@ public class PartsDatabaseUI extends Application
     }
 
     //generates the left side of the user interface
-    private GridPane getLeftPane()
-    {
+    private GridPane getLeftPane() {
         //organize elements with a grid pane
         GridPane left = new GridPane();
         left.setVgap(4);
         left.setHgap(4);
-        left.setPadding(new Insets(4, 4, 4,4));
+        left.setPadding(new Insets(4, 4, 4, 4));
 
         //enforce certain widths on the columns
         ColumnConstraints columnLeft = new ColumnConstraints();
@@ -156,22 +148,20 @@ public class PartsDatabaseUI extends Application
         hbox.setAlignment(Pos.CENTER);
 
         Button add = new Button("Add Part");
-        add.setPadding(new Insets(4,30,4,30));
+        add.setPadding(new Insets(4, 30, 4, 30));
         hbox.getChildren().add(add);
         hbox.getStyleClass().add("border-top");
 
         //adds a new part record
-        add.setOnAction(new EventHandler<ActionEvent>()
-        {
-            public void handle(ActionEvent event)
-            {
-                if(initialSize == 0 && currentSize == 0 && data.getParts().size() != 0){
+        add.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                if (initialSize == 0 && currentSize == 0 && data.getParts().size() != 0) {
                     initialSize = data.getParts().size();
                     currentSize = data.getParts().size();
                 }
                 carCategories = categories.getText().split(", ");
                 data.addPart(new CarPart(partId.getText(), manufacturer.getText(),
-                                         Integer.parseInt(listPrice.getText()), carCategories));
+                        Integer.parseInt(listPrice.getText()), carCategories));
                 currentSize++;
 
                 System.out.println(partId.getText());
@@ -191,8 +181,7 @@ public class PartsDatabaseUI extends Application
     }
 
     //generates a new label/textfield combination for form entries
-    private TextField addTextControl(String labelText, String controlName, int row, GridPane parent)
-    {
+    private TextField addTextControl(String labelText, String controlName, int row, GridPane parent) {
         //create the controls
         Label label = new Label(labelText);
         TextField textField = new TextField();
@@ -208,26 +197,23 @@ public class PartsDatabaseUI extends Application
     }
 
     //generate the right pane of controls
-    private VBox getRightPane()
-    {
+    private VBox getRightPane() {
         VBox right = new VBox();
 
         //prepare export elements
         HBox exportHeader = new HBox();
         exportHeader.setAlignment(Pos.CENTER);
-        exportHeader.setPadding(new Insets(6,0,0,0));
+        exportHeader.setPadding(new Insets(6, 0, 0, 0));
 
         Button exportButton = new Button("Export");
         exportHeader.getChildren().add(exportButton);
 
         //export all CarPart objects from the application
-        exportButton.setOnAction(new EventHandler<ActionEvent>()
-        {
-            public void handle(ActionEvent event)
-            {
+        exportButton.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
                 RadioButton exportChoice = (RadioButton) exportToggle.getSelectedToggle();
 
-                switch (exportChoice.getText()){
+                switch (exportChoice.getText()) {
                     case "Java":
                         export = new JavaExporter(data.getParts(), initialSize, currentSize);
                         exporterRequest(export);
@@ -253,34 +239,32 @@ public class PartsDatabaseUI extends Application
         //prepare import elements
         HBox importHeader = new HBox();
         importHeader.setAlignment(Pos.CENTER);
-        importHeader.setPadding(new Insets(6,0,0,0));
+        importHeader.setPadding(new Insets(6, 0, 0, 0));
 
         final Button importButton = new Button("Import");
         importHeader.getChildren().add(importButton);
 
         //imports all CarPart objects into the application
-        importButton.setOnAction(new EventHandler<ActionEvent>()
-        {
-            public void handle(ActionEvent event)
-            {
+        importButton.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
                 RadioButton importedChoice = (RadioButton) importToggle.getSelectedToggle();
 
-               switch (importedChoice.getText()){
-                   case "Java":
-                       imported = new JavaImporter(data);
-                       importerRequest(imported);
-                       break;
+                switch (importedChoice.getText()) {
+                    case "Java":
+                        imported = new JavaImporter(data);
+                        importerRequest(imported);
+                        break;
 
-                   case "JSON":
-                       imported = new JSONImporter(data);
-                       importerRequest(imported);
-                       break;
+                    case "JSON":
+                        imported = new JSONImporter(data);
+                        importerRequest(imported);
+                        break;
 
-                   case "XML":
-                       imported = new XMLImporter(data);
-                       importerRequest(imported);
-                       break;
-               }
+                    case "XML":
+                        imported = new XMLImporter(data);
+                        importerRequest(imported);
+                        break;
+                }
             }
         });
 
@@ -300,48 +284,47 @@ public class PartsDatabaseUI extends Application
         return right;
     }
 
-    private void exporterRequest(IExporter export){
-        if (export.exportParts()){
+    //Convenience method for exporting.
+    private void exporterRequest(IExporter export) {
+        if (export.exportParts()) {
             System.out.println("Size difference: " + (currentSize - initialSize));
             System.out.println("File exported.");
-        }else{
+            data.clear();
+        } else {
             System.out.println("Nothing was exported.");
         }
     }
 
-    private void importerRequest(IImporter importer){
-        if(imported.importParts()){
+    //Convenience method for importing.
+    private void importerRequest(IImporter importer) {
+        if (imported.importParts()) {
             System.out.println("File was imported.");
-        }else {
+        } else {
             System.out.println("Nothing was imported.");
         }
     }
 
     //generates a simple button with a style
-    private Button getButton(String text)
-    {
+    private Button getButton(String text) {
         Button button = new Button(text);
         button.getStyleClass().add("button");
         return button;
     }
 
     //generates a horizontal box of radio buttons with the associated group
-    private HBox getRadioButtons(ToggleGroup group, String[] options)
-    {
+    private HBox getRadioButtons(ToggleGroup group, String[] options) {
         HBox hbox = new HBox();
         hbox.setAlignment(Pos.BOTTOM_CENTER);
 
         //add each option individually
-        for (int i = 0; i < options.length; i++)
-        {
+        for (int i = 0; i < options.length; i++) {
             RadioButton rButton = new RadioButton();
             rButton.setText(options[i]);
-            rButton.setPadding(new Insets(10, 10, 10,10));
+            rButton.setPadding(new Insets(10, 10, 10, 10));
             rButton.setToggleGroup(group);
 
             //select the first option
-            if (i == 0)
-            {
+            if (i == 0) {
                 rButton.setSelected(true);
             }
 

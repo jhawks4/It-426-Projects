@@ -7,11 +7,16 @@
 
 package io;
 
-import model.CarPart;
+/**
+ * Interface for exporting data to file.
+ */
+public interface IExporter {
 
-import java.util.Collection;
-
-public interface IExporter
-{
-    public boolean exportParts();
+    /**
+     * Exports data if true.
+     *
+     * @return True if current collection size is larger than the initial size
+     * of the collection when the application started or a file was imported.
+     */
+    boolean exportParts();
 }
