@@ -30,14 +30,6 @@ public class Launcher {
 
         InitializeJSON.createJSON();
 
-        TodoController control = new TodoController();
-
-//        control.addTask("Test");
-//        control.addTask("Test 1");
-//        control.addTask("Test 2");
-
-        control.getList();
-
-        //Application.launch(TodoView.class, args);
+        Application.launch(TodoView.class, args);
     }
 }

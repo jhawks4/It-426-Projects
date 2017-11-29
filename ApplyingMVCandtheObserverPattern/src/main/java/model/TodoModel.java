@@ -50,8 +50,6 @@ public class TodoModel extends Observable{
         return SingletonHelper.MODEL;
     }
 
-
-
     //write to file
     public void writeJSON(Todo task){
 
@@ -74,19 +72,28 @@ public class TodoModel extends Observable{
     public void readJSON(){
         try {
 
-            jsonReader = new BufferedReader(new FileReader(FILE));
+            if(FILE.length() > 0){
+                jsonReader = new BufferedReader(new FileReader(FILE));
 
-            taskList = gson.fromJson(jsonReader, Todo[].class);
+                taskList = gson.fromJson(jsonReader, Todo[].class);
 
-            for (Todo task : taskList) {
-                System.out.println(task);
-                tasks.add(task);
+                for (Todo task : taskList) {
+                    System.out.println(task);
+                    tasks.add(task);
+                }
             }
-
 
         }catch (IOException exception){
             System.out.println(exception.getMessage());
         }
+    }
+
+    public int getSize(){
+        return tasks.size();
+    }
+
+    public ArrayList<Todo> getTasks() {
+        return tasks;
     }
 
     //update task

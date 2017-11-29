@@ -7,11 +7,14 @@
 
 package control;
 
+import javafx.scene.Scene;
 import model.Todo;
 import model.TodoModel;
+import view.TodoView;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
 
 /**
  * Controller class for retrieving the data, adding a new task to the model,
@@ -23,6 +26,7 @@ import java.io.FileWriter;
 public class TodoController {
 
     private TodoModel model;
+    private TodoView view;
 
 
     //Enter a new task
@@ -36,9 +40,18 @@ public class TodoController {
     //Making task complete by checking checkbox
 
     //Retrieve list of tasks
-    public void getList(){
+    public void loadList(){
         model = TodoModel.getInstance();
 
         model.readJSON();
     }
+
+    public int getSize(){
+        return model.getSize();
+    }
+
+    public ArrayList<Todo> getList(){
+        return model.getTasks();
+    }
+
 }
