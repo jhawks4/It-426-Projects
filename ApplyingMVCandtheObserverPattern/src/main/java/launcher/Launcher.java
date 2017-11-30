@@ -12,7 +12,6 @@ import javafx.application.Application;
 import model.InitializeJSON;
 import view.TodoView;
 
-
 /**
  * A class to launch the appliation.
  *

@@ -7,13 +7,12 @@
 
 package control;
 
-import javafx.scene.Scene;
+import exception.ExistingRecordException;
+
 import model.Todo;
 import model.TodoModel;
 import view.TodoView;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.util.ArrayList;
 
 /**
@@ -26,32 +25,75 @@ import java.util.ArrayList;
 public class TodoController {
 
     private TodoModel model;
-    private TodoView view;
 
-
-    //Enter a new task
-    public void addTask(String taskMessage){
+    /**
+     * Adds a task to the list.
+     *
+     * @param taskMessage The task that the user writes to do.
+     * @throws ExistingRecordException An exception to ensure that the UUID doesn't insert a duplicate id.
+     */
+    public void addTask(String taskMessage) throws ExistingRecordException {
 
         model = TodoModel.getInstance();
 
         model.writeJSON(new Todo(taskMessage));
     }
 
-    //Making task complete by checking checkbox
-
-    //Retrieve list of tasks
-    public void loadList(){
+    /**
+     * Loads the list of tasks.
+     */
+    public void loadList() {
         model = TodoModel.getInstance();
 
         model.readJSON();
     }
 
-    public int getSize(){
+    /**
+     * Get the size of the list.
+     *
+     * @return Returns an integer value of the size of the list.
+     */
+    public int getSize() {
         return model.getSize();
     }
 
-    public ArrayList<Todo> getList(){
+    /**
+     * Gets the list.
+     *
+     * @return Returns the list.
+     */
+    public ArrayList<Todo> getList() {
         return model.getTasks();
+    }
+
+    /**
+     * Adds an observer to the model.
+     *
+     * @param observer An observer to be added.
+     */
+    public void addObservers(TodoView observer) {
+        if (model.countObservers() == 0) {
+            model.addObserver(observer);
+        }
+    }
+
+    /**
+     * Removes a task from the list.
+     *
+     * @param id The UUID to compare with.
+     */
+    public void removeTask(String id) {
+        model.remove(id);
+    }
+
+    /**
+     * Updates a current task message.
+     *
+     * @param originalMessage The original message string.
+     * @param updatedMessage  The updated messsage string.
+     */
+    public void updateTask(String originalMessage, String updatedMessage) {
+        model.update(originalMessage, updatedMessage);
     }
 
 }

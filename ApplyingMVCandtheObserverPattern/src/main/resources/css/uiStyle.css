@@ -1,0 +1,45 @@
+/*Used for all backgrounds */
+.root {
+    -fx-background-color: lightsalmon;
+}
+
+/*Title id for the home*/
+#homeTitle {
+    -fx-font-size: 36;
+    -fx-font-weight: bold;
+}
+
+/*Id for text on the home*/
+#homeText {
+    -fx-font-size: 18;
+}
+
+/*Class for the titles of most scenes.*/
+.sceneTitle {
+    -fx-font-size: 24;
+    -fx-font-weight: bold;
+}
+
+/*Class for view button.*
+.viewButton{
+    -fx-pref-width: 75;
+}
+
+/*Id for the button to add a new task*/
+#addingTask {
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+    -fx-min-width: 60;
+}
+
+/*Id for the task text*/
+#taskText {
+    -fx-font-size: 16;
+}
+
+/*id for the submission button*/
+#submitButton {
+    -fx-font-size: 18;
+    -fx-font-weight: bold;
+    -fx-max-height: 20;
+}
