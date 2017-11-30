@@ -215,7 +215,8 @@ public class TodoView extends Application implements Observer {
                 edits[i].setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        sceneSetter.setScene(updateTask(taskList[index.getIndex()].getText()));
+                        sceneSetter.setScene(updateTask(taskList[index.getIndex()].getText(),
+                                taskList[index.getIndex()].getId()));
                     }
                 });
 
@@ -238,7 +239,7 @@ public class TodoView extends Application implements Observer {
     }
 
     //used to update a current available task.
-    private Scene updateTask(String message) {
+    private Scene updateTask(String message, String id) {
         VBox main = mainVbox();
 
         Text title = titleMaker("Update Task Message");
@@ -253,7 +254,7 @@ public class TodoView extends Application implements Observer {
         submit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                controller.updateTask(message, messageBox.getText());
+                controller.updateTask(id, messageBox.getText());
                 sceneSetter.setScene(taskView());
             }
         });

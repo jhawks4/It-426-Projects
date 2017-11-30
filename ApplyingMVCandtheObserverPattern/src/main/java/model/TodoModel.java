@@ -161,9 +161,12 @@ public class TodoModel extends Observable {
      * @param originalMessage The original message to be searched for.
      * @param updatedMessage  The updated message to replace the found original message.
      */
-    public void update(String originalMessage, String updatedMessage) {
+    public void update(String id, String updatedMessage) {
+
+        String UUID;
         for (Todo task : tasks) {
-            if (task.getMessage() == originalMessage) {
+            UUID = "" + task.getId();
+            if (UUID == id) {
                 task.setMessage(updatedMessage);
             }
         }

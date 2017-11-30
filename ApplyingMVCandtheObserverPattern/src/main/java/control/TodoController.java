@@ -89,11 +89,11 @@ public class TodoController {
     /**
      * Updates a current task message.
      *
-     * @param originalMessage The original message string.
-     * @param updatedMessage  The updated messsage string.
+     * @param id             The UUID to compare.
+     * @param updatedMessage The updated messsage string.
      */
-    public void updateTask(String originalMessage, String updatedMessage) {
-        model.update(originalMessage, updatedMessage);
+    public void updateTask(String id, String updatedMessage) {
+        model.update(id, updatedMessage);
     }
 
 }
