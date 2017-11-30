@@ -155,11 +155,11 @@ public class TodoModel extends Observable {
     }
 
     /**
-     * Loops to look for the original message in the list of tasks and then updates with
-     * the new updated task messsage.
+     * Loops to look for the original message in the list of tasks
+     * and then updates with the new updated task messsage.
      *
-     * @param originalMessage The original message to be searched for.
-     * @param updatedMessage  The updated message to replace the found original message.
+     * @param id             The UUID to compare.
+     * @param updatedMessage The updated message to replace the found original message.
      */
     public void update(String id, String updatedMessage) {
 
