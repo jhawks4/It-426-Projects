@@ -166,8 +166,10 @@ public class TodoModel extends Observable {
         String UUID;
         for (Todo task : tasks) {
             UUID = "" + task.getId();
-            if (UUID == id) {
+            if (id.equals(UUID)) {
                 task.setMessage(updatedMessage);
+                this.setChanged();
+                this.notifyObservers();
             }
         }
     }
