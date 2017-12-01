@@ -7,7 +7,11 @@ import shapes.Line;
 
 public class LineAdapter implements IShape{
 
-    Line line
+    Line line;
+
+    public LineAdapter(){
+
+    }
 
     @Override
     public IShape setThickness(double value) {
