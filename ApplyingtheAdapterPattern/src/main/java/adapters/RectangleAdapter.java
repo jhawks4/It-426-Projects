@@ -3,8 +3,16 @@ package adapters;
 import drawing.IShape;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import shapes.Rectangle;
 
 public class RectangleAdapter implements IShape{
+
+    Rectangle rectangle;
+
+    RectangleAdapter(){
+        //rectangle = new Rectangle();
+    }
+
     @Override
     public IShape setThickness(double value) {
         return null;

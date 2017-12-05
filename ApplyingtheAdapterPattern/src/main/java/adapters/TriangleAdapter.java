@@ -3,8 +3,17 @@ package adapters;
 import drawing.IShape;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import shapes.Triangle;
 
 public class TriangleAdapter implements IShape{
+
+     Triangle triangle;
+     IShape actualTriangle;
+
+     TriangleAdapter(double x, double y, double width, double length, double thickness, Color color, boolean fill){
+         triangle = new Triangle(x, y, width, length, thickness, color, fill);
+     }
+
     @Override
     public IShape setThickness(double value) {
         return null;
@@ -22,27 +31,27 @@ public class TriangleAdapter implements IShape{
 
     @Override
     public double getX() {
-        return 0;
+        return triangle.getX();
     }
 
     @Override
     public double getY() {
-        return 0;
+        return triangle.getY();
     }
 
     @Override
     public double getThickness() {
-        return 0;
+        return triangle.getThickness();
     }
 
     @Override
     public Color getColor() {
-        return null;
+        return triangle.getColor();
     }
 
     @Override
     public boolean getFilled() {
-        return false;
+        return triangle.isFill();
     }
 
     @Override

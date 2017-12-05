@@ -30,27 +30,27 @@ public class LineAdapter implements IShape{
 
     @Override
     public double getX() {
-       return line.getX();
+       return line.getX2();
     }
 
     @Override
     public double getY() {
-        return line.getY();
+        return line.getY2();
     }
 
     @Override
     public double getThickness() {
-        return 0;
+        return line.getThickness();
     }
 
     @Override
     public Color getColor() {
-        return null;
+        return line.getColor();
     }
 
     @Override
     public boolean getFilled() {
-        return false;
+        return line.isFill();
     }
 
     @Override

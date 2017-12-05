@@ -3,8 +3,16 @@ package adapters;
 import drawing.IShape;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import shapes.Circle;
 
 public class CircleAdapter implements IShape{
+
+    Circle circle;
+
+    CircleAdapter(){
+        //circle = new Circle();
+    }
+
     @Override
     public IShape setThickness(double value) {
         return null;
