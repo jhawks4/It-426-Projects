@@ -1,8 +1,8 @@
 /*
  * Joshua Hawks
  * 12/07/2017
- * LineAdapter.java
- * An adapter for the Line class.
+ * PentagonAdapter.java
+ * An adapter for the Pentagon class.
  */
 
 package adapters;
@@ -10,19 +10,17 @@ package adapters;
 import drawing.IShape;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import shapes.Line;
-
-import java.util.Random;
+import shapes.Pentagon;
 
 /**
- * This class is an adapter for the Line class and allows it to become and IShape object.
+ * This class is an adapter for the Pentagon class and allows it to become and IShape object.
  *
  * @author Joshua Hawks
  * @version 1.0
  */
-public class LineAdapter implements IShape{
+public class PentagonAdapter implements IShape{
 
-    private Line line;
+    private Pentagon pentagon;
     private IShape shape;
 
     /**
@@ -30,13 +28,13 @@ public class LineAdapter implements IShape{
      * @param x The x coordinate.
      * @param y The y coordinate.
      */
-    public LineAdapter(double x, double y){
-        line = new Line(x, y, x - 50, y - 50, 1, Color.BLACK, false);
+    public PentagonAdapter(double x, double y){
+        pentagon = new Pentagon(x, y, 50, 50, 1, Color.BLACK, false);
     }
 
     //Constructor used for updating the shape.
-    private LineAdapter(double x, double y, double thickness, Color color, boolean fill){
-        line = new Line(x, y, x - 50, y - 50, thickness, color, fill);
+    private PentagonAdapter(double x, double y, double thickness, Color color, boolean fill){
+        pentagon = new Pentagon(x, y, 50, 50, thickness, color, fill);
     }
 
     /**
@@ -47,7 +45,7 @@ public class LineAdapter implements IShape{
      */
     @Override
     public IShape setThickness(double value) {
-        shape = new LineAdapter(getX(), getY(), value, getColor(), getFilled());
+        shape = new PentagonAdapter(getX(), getY(), value, getColor(), getFilled());
         return shape;
     }
 
@@ -59,7 +57,7 @@ public class LineAdapter implements IShape{
      */
     @Override
     public IShape setColor(Color value) {
-        shape = new LineAdapter(getX(), getY(), getThickness(), value, getFilled());
+        shape = new PentagonAdapter(getX(), getY(), getThickness(), value, getFilled());
         return shape;
     }
 
@@ -71,7 +69,7 @@ public class LineAdapter implements IShape{
      */
     @Override
     public IShape setFilled(boolean value) {
-        shape = new LineAdapter(getX(), getY(), getThickness(), getColor(), value);
+        shape = new PentagonAdapter(getX(), getY(), getThickness(), getColor(), value);
         return shape;
     }
 
@@ -82,7 +80,7 @@ public class LineAdapter implements IShape{
      */
     @Override
     public double getX() {
-       return line.getX();
+        return pentagon.getX();
     }
 
     /**
@@ -92,7 +90,7 @@ public class LineAdapter implements IShape{
      */
     @Override
     public double getY() {
-        return line.getY();
+        return pentagon.getY();
     }
 
     /**
@@ -102,7 +100,7 @@ public class LineAdapter implements IShape{
      */
     @Override
     public double getThickness() {
-        return line.getThickness();
+        return pentagon.getThickness();
     }
 
     /**
@@ -112,7 +110,7 @@ public class LineAdapter implements IShape{
      */
     @Override
     public Color getColor() {
-        return line.getColor();
+        return pentagon.getColor();
     }
 
     /**
@@ -122,7 +120,7 @@ public class LineAdapter implements IShape{
      */
     @Override
     public boolean getFilled() {
-        return line.isFill();
+        return pentagon.isFill();
     }
 
     /**
@@ -132,19 +130,23 @@ public class LineAdapter implements IShape{
      */
     @Override
     public void drawShape(GraphicsContext graphics) {
-        Random random = new Random();
 
         //Coordinates for the shape.
-        int secondXCoordinate = random.nextInt(200);
-        int secondYCoordinate = random.nextInt(200);
+        double[] upperTriangleXCoordinates = {getX(), getX() + 30, getX() + 60, getX() + 60, getX()};
+        double[] upperTriangleYCoordinates = {getY(), getY() - 30, getY(), getY() + 50, getY() + 50};
 
         //Provides the color for the shape
         graphics.setStroke(getColor());
+        graphics.setFill(getColor());
 
         //Provides the thickness for the shape.
         graphics.setLineWidth(getThickness());
 
         //Draws the shape
-        graphics.strokeLine(getX(), getY(), secondXCoordinate, secondYCoordinate);
+        if(getFilled()){
+            graphics.fillPolygon(upperTriangleXCoordinates, upperTriangleYCoordinates, 5);
+        }else {
+            graphics.strokePolygon(upperTriangleXCoordinates, upperTriangleYCoordinates, 5);
+        }
     }
 }
