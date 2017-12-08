@@ -20,6 +20,8 @@ import shapes.Pentagon;
  */
 public class PentagonAdapter implements IShape{
 
+    private static final int DEFUALT_WIDTH_OR_HEIGHT = 50;
+    private static final int PENTAGON_POINTS = 5;
     private Pentagon pentagon;
     private IShape shape;
 
@@ -29,12 +31,12 @@ public class PentagonAdapter implements IShape{
      * @param y The y coordinate.
      */
     public PentagonAdapter(double x, double y){
-        pentagon = new Pentagon(x, y, 50, 50, 1, Color.BLACK, false);
+        pentagon = new Pentagon(x, y, DEFUALT_WIDTH_OR_HEIGHT, DEFUALT_WIDTH_OR_HEIGHT, 1, Color.BLACK, false);
     }
 
     //Constructor used for updating the shape.
     private PentagonAdapter(double x, double y, double thickness, Color color, boolean fill){
-        pentagon = new Pentagon(x, y, 50, 50, thickness, color, fill);
+        pentagon = new Pentagon(x, y, DEFUALT_WIDTH_OR_HEIGHT, DEFUALT_WIDTH_OR_HEIGHT, thickness, color, fill);
     }
 
     /**
@@ -133,7 +135,7 @@ public class PentagonAdapter implements IShape{
 
         //Coordinates for the shape.
         double[] upperTriangleXCoordinates = {getX(), getX() + 30, getX() + 60, getX() + 60, getX()};
-        double[] upperTriangleYCoordinates = {getY(), getY() - 30, getY(), getY() + 50, getY() + 50};
+        double[] upperTriangleYCoordinates = {getY(), getY() - 30, getY(), getY() + DEFUALT_WIDTH_OR_HEIGHT, getY() + DEFUALT_WIDTH_OR_HEIGHT};
 
         //Provides the color for the shape
         graphics.setStroke(getColor());
@@ -144,9 +146,9 @@ public class PentagonAdapter implements IShape{
 
         //Draws the shape
         if(getFilled()){
-            graphics.fillPolygon(upperTriangleXCoordinates, upperTriangleYCoordinates, 5);
+            graphics.fillPolygon(upperTriangleXCoordinates, upperTriangleYCoordinates, PENTAGON_POINTS);
         }else {
-            graphics.strokePolygon(upperTriangleXCoordinates, upperTriangleYCoordinates, 5);
+            graphics.strokePolygon(upperTriangleXCoordinates, upperTriangleYCoordinates, PENTAGON_POINTS);
         }
     }
 }

@@ -22,6 +22,8 @@ import java.util.Random;
  */
 public class LineAdapter implements IShape{
 
+    private static final int DEFAULT_X_OR_Y_COORDINATE = 50;
+    private static final int BOUND = 200;
     private Line line;
     private IShape shape;
 
@@ -31,12 +33,12 @@ public class LineAdapter implements IShape{
      * @param y The y coordinate.
      */
     public LineAdapter(double x, double y){
-        line = new Line(x, y, x - 50, y - 50, 1, Color.BLACK, false);
+        line = new Line(x, y, x - DEFAULT_X_OR_Y_COORDINATE, y - DEFAULT_X_OR_Y_COORDINATE, 1, Color.BLACK, false);
     }
 
     //Constructor used for updating the shape.
     private LineAdapter(double x, double y, double thickness, Color color, boolean fill){
-        line = new Line(x, y, x - 50, y - 50, thickness, color, fill);
+        line = new Line(x, y, x - DEFAULT_X_OR_Y_COORDINATE, y - DEFAULT_X_OR_Y_COORDINATE, thickness, color, fill);
     }
 
     /**
@@ -135,8 +137,8 @@ public class LineAdapter implements IShape{
         Random random = new Random();
 
         //Coordinates for the shape.
-        int secondXCoordinate = random.nextInt(200);
-        int secondYCoordinate = random.nextInt(200);
+        int secondXCoordinate = random.nextInt(BOUND);
+        int secondYCoordinate = random.nextInt(BOUND);
 
         //Provides the color for the shape
         graphics.setStroke(getColor());

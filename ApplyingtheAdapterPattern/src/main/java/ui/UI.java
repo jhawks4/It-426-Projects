@@ -33,6 +33,9 @@ import javafx.stage.Stage;
  */
 public class UI extends Application {
 
+    private static final int APPLICATION_WINDOW_WIDTH = 1000;
+    private static final int APPLICATION_WINDOW_HEIGHT = 500;
+    private static final int INITIAL_DEFAULT_VALUE = 1;
     private IShape shape;
 
     /**
@@ -56,10 +59,10 @@ public class UI extends Application {
 
         //Used to hold all the drawing options.
         ToolBar drawingTools = new ToolBar();
-        drawingTools.setPrefWidth(1000);
+        drawingTools.setPrefWidth(APPLICATION_WINDOW_WIDTH);
 
         //Used for drawing
-        Canvas canvas = new Canvas(1000, 500);
+        Canvas canvas = new Canvas(APPLICATION_WINDOW_WIDTH, APPLICATION_WINDOW_HEIGHT);
 
         //Used to do the drawing.
         GraphicsContext graphics = canvas.getGraphicsContext2D();
@@ -133,9 +136,9 @@ public class UI extends Application {
 
         //A slider that can be used to set the thickness of the shape.
         Slider thicknessSlider = new Slider();
-        thicknessSlider.setMin(1);
+        thicknessSlider.setMin(INITIAL_DEFAULT_VALUE);
         thicknessSlider.setMax(10);
-        thicknessSlider.setValue(1);
+        thicknessSlider.setValue(INITIAL_DEFAULT_VALUE);
         thicknessSlider.setShowTickLabels(true);
         thicknessSlider.setPrefWidth(100);
 
@@ -206,6 +209,6 @@ public class UI extends Application {
             }
         });
 
-        return new Scene(window, 1000, 500);
+        return new Scene(window, APPLICATION_WINDOW_WIDTH, APPLICATION_WINDOW_HEIGHT);
     }
 }

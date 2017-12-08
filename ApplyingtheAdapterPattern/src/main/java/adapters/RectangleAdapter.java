@@ -20,6 +20,8 @@ import shapes.Rectangle;
  */
 public class RectangleAdapter implements IShape{
 
+    private static final int DEFAULT_WIDTH_OR_HEIGHT = 50;
+    private static final int DEFAULT_RECTANGLE_WIDTH = 100;
     private Rectangle rectangle;
     private IShape shape;
 
@@ -29,12 +31,12 @@ public class RectangleAdapter implements IShape{
      * @param y The y coordinate.
      */
     public RectangleAdapter(double x, double y){
-        rectangle = new Rectangle(x, y, 50, 50, 1, Color.BLACK, false);
+        rectangle = new Rectangle(x, y, DEFAULT_WIDTH_OR_HEIGHT, DEFAULT_WIDTH_OR_HEIGHT, 1, Color.BLACK, false);
     }
 
     //Constructor used for updating the shape.
     private RectangleAdapter(double x, double y, double thickness, Color color, boolean fill){
-        rectangle = new Rectangle(x, y, 50, 50, thickness, color, fill);
+        rectangle = new Rectangle(x, y, DEFAULT_WIDTH_OR_HEIGHT, DEFAULT_WIDTH_OR_HEIGHT, thickness, color, fill);
     }
 
     /**
@@ -140,9 +142,9 @@ public class RectangleAdapter implements IShape{
 
         //Draws the shape
         if(getFilled()){
-            graphics.fillRect(getX(), getY(), 100, 50);
+            graphics.fillRect(getX(), getY(), DEFAULT_RECTANGLE_WIDTH, DEFAULT_WIDTH_OR_HEIGHT);
         }else {
-            graphics.strokeRect(getX(), getY(), 100, 50);
+            graphics.strokeRect(getX(), getY(), DEFAULT_RECTANGLE_WIDTH, DEFAULT_WIDTH_OR_HEIGHT);
         }
     }
 }

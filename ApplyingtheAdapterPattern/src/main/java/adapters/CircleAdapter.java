@@ -20,6 +20,8 @@ import shapes.Circle;
  */
 public class CircleAdapter implements IShape{
 
+    private static final int DEFAULT_FILLERS = 1;
+    private static final int WIDTH_OR_HEIGHT = 50;
     private Circle circle;
     private IShape shape;
 
@@ -29,12 +31,12 @@ public class CircleAdapter implements IShape{
      * @param y The y coordinate.
      */
     public CircleAdapter(double x, double y){
-        circle = new Circle(1, x, y, 1, Color.BLACK, false);
+        circle = new Circle(DEFAULT_FILLERS, x, y, DEFAULT_FILLERS, Color.BLACK, false);
     }
 
     //Constructor used for updating the shape.
     private CircleAdapter(double x, double y, double thickness, Color color, boolean fill){
-        circle = new Circle(1, x, y, thickness, color, fill);
+        circle = new Circle(DEFAULT_FILLERS, x, y, thickness, color, fill);
     }
 
     /**
@@ -140,9 +142,9 @@ public class CircleAdapter implements IShape{
 
         //Draws the shape
         if(getFilled()){
-            graphics.fillOval(getX(), getY(), 50, 50);
+            graphics.fillOval(getX(), getY(), WIDTH_OR_HEIGHT, WIDTH_OR_HEIGHT);
         }else {
-            graphics.strokeOval(getX(), getY(), 50, 50);
+            graphics.strokeOval(getX(), getY(), WIDTH_OR_HEIGHT, WIDTH_OR_HEIGHT);
         }
     }
 }

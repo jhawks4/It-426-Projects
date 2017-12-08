@@ -20,6 +20,7 @@ import shapes.Triangle;
  */
 public class TriangleAdapter implements IShape {
 
+    private static final int WIDTH_OR_HEIGHT = 50;
     private Triangle triangle;
     private IShape shape;
 
@@ -30,12 +31,12 @@ public class TriangleAdapter implements IShape {
      * @param y The y coordinate.
      */
     public TriangleAdapter(double x, double y) {
-        triangle = new Triangle(x, y, 50, 50, 1, Color.BLACK, false);
+        triangle = new Triangle(x, y, WIDTH_OR_HEIGHT, WIDTH_OR_HEIGHT, 1, Color.BLACK, false);
     }
 
     //Constructor used for updating the shape.
     private TriangleAdapter(double x, double y, double thickness, Color color, boolean fill) {
-        triangle = new Triangle(x, y, 50, 50, thickness, color, fill);
+        triangle = new Triangle(x, y, WIDTH_OR_HEIGHT, WIDTH_OR_HEIGHT, thickness, color, fill);
     }
 
     /**
