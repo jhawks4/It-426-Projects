@@ -1,0 +1,21 @@
+.root{
+    -fx-background-color: black;
+}
+
+.title{
+    -fx-font-size: 50;
+    -fx-font-weight: bolder;
+    -fx-fill: red;
+}
+
+.credits{
+    -fx-font-size: 30;
+    -fx-font-weight: bolder;
+    -fx-fill: red;
+}
+
+.button{
+    -fx-min-width: 100;
+    -fx-max-width: 100;
+    -fx-padding: 5;
+}

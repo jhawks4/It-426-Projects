@@ -11,8 +11,17 @@ import ui.UI;
 
 import static javafx.application.Application.launch;
 
-public class Launcher {
-    public static void main(String[] args) {
+/**
+ * Class for running the application.
+ * @author Nicholas Perez & Joshua Hawks
+ * @version 1.0
+ */
+public class Launcher{
+    /**
+     * Main method that runs the application.
+     * @param args Parameters that can be passed in at the start of a Java program.
+     */
+    public static void main(String[] args){
         launch(UI.class, args);
     }
 }
