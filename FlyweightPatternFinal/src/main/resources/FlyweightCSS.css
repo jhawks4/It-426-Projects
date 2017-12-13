@@ -1,17 +1,19 @@
 .root{
-    -fx-background-color: black;
+    -fx-background-color: #323232;
+}
+
+Text{
+    -fx-fill: #ffffff;
 }
 
 .title{
     -fx-font-size: 50;
     -fx-font-weight: bolder;
-    -fx-fill: red;
 }
 
 .credits{
     -fx-font-size: 30;
     -fx-font-weight: bolder;
-    -fx-fill: red;
 }
 
 .button{

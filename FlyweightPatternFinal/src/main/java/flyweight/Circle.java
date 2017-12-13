@@ -14,11 +14,13 @@ import java.util.Random;
 
 /**
  * A concrete class used to give the circle shape its intrinsic and extrinsic states.
+ *
  * @author Nicholas Perez & Joshua Hawks
  * @version 1.0
  */
 public class Circle implements IShape{
 
+    private static final int MINIMUM_COORDINATE_RANGE = 10;
     private final double CIRCLE_WIDTH_AND_HEIGHT = 20;
     private Random random = new Random();
     private Color color;
@@ -30,8 +32,8 @@ public class Circle implements IShape{
      * @param color Used to provide the color the shape.
      */
     Circle(String color){
-        xCoordinate = random.nextInt((400 - 20) + 1 + 20);
-        yCoordinate = random.nextInt((300 - 125) + 1 + 125);
+        xCoordinate = random.nextInt(560) + MINIMUM_COORDINATE_RANGE;
+        yCoordinate = random.nextInt(250) + MINIMUM_COORDINATE_RANGE;
         colorSwitch(color);
     }
 
@@ -39,23 +41,23 @@ public class Circle implements IShape{
     private void colorSwitch(String color){
         switch(color){
             case "red":
-                this.color = Color.RED;
+                this.color = Color.web("#ff4747");
                 break;
 
             case "blue":
-                this.color = Color.BLUE;
+                this.color = Color.web("#47beff");
                 break;
 
             case "green":
-                this.color = Color.GREEN;
+                this.color = Color.web("#96ff47");
                 break;
 
             case "yellow":
-                this.color = Color.YELLOW;
+                this.color = Color.web("#fff966");
                 break;
 
             case "purple":
-                this.color = Color.PURPLE;
+                this.color = Color.web("#b966ff");
                 break;
         }
     }

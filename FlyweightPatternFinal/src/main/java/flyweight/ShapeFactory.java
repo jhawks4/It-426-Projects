@@ -13,6 +13,7 @@ import java.util.Random;
 
 /**
  * A factory class for making circle objects.
+ *
  * @author Nicholas Perez & Joshua Hawks
  * @version 1.0
  */
@@ -36,11 +37,9 @@ public class ShapeFactory{
         if(circle == null){
             circle = new Circle(color);
             shapeMap.put(color, circle);
-            System.out.println("A circle with color " + color + " was added.");
         }else{
-            System.out.println("A circle with color " + color + " exists");
-            circle.setX(random.nextInt((600) + 1));
-            circle.setY(random.nextInt((400 + 125) + 1 - 125));
+            circle.setX(random.nextInt(560) + 10);
+            circle.setY(random.nextInt(250) + 10);
         }
 
         return circle;

@@ -30,21 +30,25 @@ import javafx.util.Duration;
 
 import java.io.File;
 
+import java.time.Instant;
 import java.util.Random;
 
 /**
  * The UI class that provides the application with a GUI for the user
  * to interact with the application.
+ *
  * @author Nicholas Perez & Joshua Hawks
  * @version 1.0
  */
 public class UI extends Application{
 
+    private static final int WINDOW_WIDTH_AND_HEIGHT = 600;
     private File file = songSwitch(sceneNames.HOME);
     private Stage stage;
     private Media media;
     private MediaPlayer player;
 
+    //Used to assign how many circles need to be made.
     private int iteration = 20;
 
     //Used to select the scenes in the application.
@@ -52,7 +56,7 @@ public class UI extends Application{
 
         HOME,
         GAMELOOP,
-        CREDITS;
+        CREDITS
     }
 
     //Used to help assign colors to the shapes.
@@ -98,7 +102,7 @@ public class UI extends Application{
         this.stage = stage;
 
         stage.setTitle("Flyweight Pattern");
-        stage.getIcons().add(new Image("leafIcon.jpg"));
+        stage.getIcons().add(new Image("flyweight_logo.png"));
         stage.setScene(startingScene());
         stage.show();
 
@@ -112,6 +116,7 @@ public class UI extends Application{
         media = new Media(mediaFile.toURI().toString());
         player = new MediaPlayer(media);
         player.setCycleCount(MediaPlayer.INDEFINITE);
+        player.setVolume(0.5);
         player.play();
     }
 
@@ -137,7 +142,7 @@ public class UI extends Application{
 
         box.getChildren().addAll(title, enter);
 
-        return new Scene(box, 600, 600);
+        return new Scene(box, WINDOW_WIDTH_AND_HEIGHT, WINDOW_WIDTH_AND_HEIGHT);
     }
 
     //A simple switch for changing up the music file.
@@ -164,18 +169,20 @@ public class UI extends Application{
     //A scene for drawing the actual circle shapes.
     private Scene gameLoop(int iterations){
 
+        String methodTimer = null;
+
         VBox box = new VBox();
         VBox header = new VBox();
         VBox body = new VBox();
         box.setAlignment(Pos.CENTER);
         box.getStylesheets().add("FlyweightCSS.css");
-        box.setSpacing(10);
+        box.setSpacing(5);
         header.setAlignment(Pos.CENTER);
-        header.setPrefSize(600, 50);
+        header.setPrefSize(WINDOW_WIDTH_AND_HEIGHT, 50);
         body.setAlignment(Pos.CENTER);
-        body.setPrefSize(600, 400);
+        body.setPrefSize(WINDOW_WIDTH_AND_HEIGHT, 400);
 
-        Canvas canvas = new Canvas(600, 300);
+        Canvas canvas = new Canvas(WINDOW_WIDTH_AND_HEIGHT, 300);
         GraphicsContext graphics = canvas.getGraphicsContext2D();
         IShape circle;
         Random random = new Random();
@@ -183,13 +190,16 @@ public class UI extends Application{
         Text title = new Text("Observe the Flyweight");
         title.getStyleClass().add("title");
 
+        Text objectCounter = new Text("Number of Circle Objects: " + iteration);
+        Text objectTimer = new Text("");
+
         Button makeCircles = new Button("Draw");
         Button credits = new Button("Credits");
 
         makeCircles.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent event){
-
+                objectCounter.setText("Number of Circle Objects: " + iteration);
                 stage.setScene(gameLoop(iteration = iteration * 2));
             }
         });
@@ -203,28 +213,47 @@ public class UI extends Application{
             }
         });
 
+        //Gets current system time.
+        Instant startTimer = Instant.now();
+
+        //loop for drawing our circles
         for(int i = 0; i < iterations; i++){
             circle = (Circle) ShapeFactory.getCircle(shapeColors[random.nextInt(shapeColors.length)]);
             circle.draw(graphics);
         }
 
+        //Get current system time for end timer
+        Instant endTimer = Instant.now();
+
+        //Used to make text to show milliseconds or seconds
+        if(java.time.Duration.between(startTimer, endTimer).getSeconds() == 0){
+            methodTimer = "Milliseconds: " + java.time.Duration.between(startTimer, endTimer).toMillis();
+            objectTimer.setText(methodTimer);
+        }else{
+            methodTimer = "Seconds: " + java.time.Duration.between(startTimer, endTimer).getSeconds();
+            objectTimer.setText(methodTimer);
+        }
+
+
         header.getChildren().add(title);
         body.getChildren().add(canvas);
 
-        box.getChildren().addAll(header, body, makeCircles, credits);
+        box.getChildren().addAll(header, body, objectCounter, objectTimer, makeCircles, credits);
 
-        return new Scene(box, 600, 600);
+        return new Scene(box, WINDOW_WIDTH_AND_HEIGHT, WINDOW_WIDTH_AND_HEIGHT);
     }
 
     //Basic credits for the application and project.
     private Scene credits(){
 
+        //Used for indexing in event handling.
         FadeSwitch fadeSwitch = new FadeSwitch();
+
         final String[] array = {"Thank you for coming", "Developers",
-                                "Josh Hawks\n &\n Nicholas Perez", "Music",
-                                "A Deus\n by\n Noriyuki Iwadare", "Naruto's Daily Life\n by\n Toshio Masuda",
-                                "Tribute\n by\n Tenacious D", "Sources", "DZone\n JournalDev\n OODesign\n " +
-                                "Game Programming Patterns\n BlackWasp\n tutotialspoint", "The End ^_^"};
+                "Josh Hawks\n&\nNicholas Perez", "Music",
+                "A Deus\nby\nNoriyuki Iwadare", "Naruto's Daily Life\nby\nToshio Masuda",
+                "Tribute\nby\nTenacious D", "Sources", "DZone\nJournalDev\nOODesign\n" +
+                "Game Programming Patterns\nBlackWasp\ntutotialspoint(sorry Josh...)", "The End <(^ ^<) ^(^ ^)^ (> ^ ^)>"};
 
         VBox box = new VBox();
         box.setAlignment(Pos.CENTER);
@@ -251,7 +280,10 @@ public class UI extends Application{
                 fadeSwitch.incrementByOne();
                 if(fadeSwitch.getIncrementation() != array.length){
                     message.setText(array[fadeSwitch.getIncrementation()]);
+                }else{
+                    Platform.exit();
                 }
+
                 fadeIn.play();
             }
         });
@@ -259,9 +291,6 @@ public class UI extends Application{
         fadeIn.setOnFinished(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent event){
-                if(fadeSwitch.getIncrementation() == array.length){
-                    Platform.exit();
-                }
                 fadeOut.play();
             }
         });
@@ -270,6 +299,6 @@ public class UI extends Application{
 
         box.getChildren().add(message);
 
-        return new Scene(box, 600, 600);
+        return new Scene(box, WINDOW_WIDTH_AND_HEIGHT, WINDOW_WIDTH_AND_HEIGHT);
     }
 }

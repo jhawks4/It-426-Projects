@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 
 /**
  * An interface that contains the flyweight pattern intrinsic state methods.
+ *
  * @author Nicholas Perez & Joshua Hawks
  * @version 1.0
  */
