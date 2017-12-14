@@ -21,7 +21,7 @@ import java.util.Random;
 public class Circle implements IShape{
 
     private static final int MINIMUM_COORDINATE_RANGE = 10;
-    private final double CIRCLE_WIDTH_AND_HEIGHT = 20;
+    private final double CIRCLE_WIDTH_AND_HEIGHT = 5;
     private Random random = new Random();
     private Color color;
     private int xCoordinate, yCoordinate;
