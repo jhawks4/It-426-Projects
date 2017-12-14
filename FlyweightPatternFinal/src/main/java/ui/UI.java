@@ -122,10 +122,11 @@ public class UI extends Application{
 
     //Starting view.
     private Scene startingScene(){
-        VBox box = new VBox();
-        box.setAlignment(Pos.CENTER);
-        box.setSpacing(10);
-        box.getStylesheets().add("FlyweightCSS.css");
+        VBox mainWindow = new VBox();
+        mainWindow.setAlignment(Pos.CENTER);
+        mainWindow.setSpacing(10);
+        mainWindow.getStylesheets().add("FlyweightCSS.css");
+        mainWindow.setId("firstScene");
 
         Text title = new Text("Light Flies");
         title.getStyleClass().add("title");
@@ -140,9 +141,9 @@ public class UI extends Application{
             }
         });
 
-        box.getChildren().addAll(title, enter);
+        mainWindow.getChildren().addAll(title, enter);
 
-        return new Scene(box, WINDOW_WIDTH_AND_HEIGHT, WINDOW_WIDTH_AND_HEIGHT);
+        return new Scene(mainWindow, WINDOW_WIDTH_AND_HEIGHT, WINDOW_WIDTH_AND_HEIGHT);
     }
 
     //A simple switch for changing up the music file.
@@ -171,12 +172,12 @@ public class UI extends Application{
 
         String methodTimer = null;
 
-        VBox box = new VBox();
+        VBox mainWindow = new VBox();
         VBox header = new VBox();
         VBox body = new VBox();
-        box.setAlignment(Pos.CENTER);
-        box.getStylesheets().add("FlyweightCSS.css");
-        box.setSpacing(5);
+        mainWindow.setAlignment(Pos.CENTER);
+        mainWindow.getStylesheets().add("FlyweightCSS.css");
+        mainWindow.setSpacing(5);
         header.setAlignment(Pos.CENTER);
         header.setPrefSize(WINDOW_WIDTH_AND_HEIGHT, 50);
         body.setAlignment(Pos.CENTER);
@@ -238,9 +239,9 @@ public class UI extends Application{
         header.getChildren().add(title);
         body.getChildren().add(canvas);
 
-        box.getChildren().addAll(header, body, objectCounter, objectTimer, makeCircles, credits);
+        mainWindow.getChildren().addAll(header, body, objectCounter, objectTimer, makeCircles, credits);
 
-        return new Scene(box, WINDOW_WIDTH_AND_HEIGHT, WINDOW_WIDTH_AND_HEIGHT);
+        return new Scene(mainWindow, WINDOW_WIDTH_AND_HEIGHT, WINDOW_WIDTH_AND_HEIGHT);
     }
 
     //Basic credits for the application and project.
@@ -255,9 +256,9 @@ public class UI extends Application{
                 "Tribute\nby\nTenacious D", "Sources", "DZone\nJournalDev\nOODesign\n" +
                 "Game Programming Patterns\nBlackWasp\ntutotialspoint(sorry Josh...)", "The End <(^ ^<) ^(^ ^)^ (> ^ ^)>"};
 
-        VBox box = new VBox();
-        box.setAlignment(Pos.CENTER);
-        box.getStylesheets().add("FlyweightCSS.css");
+        VBox mainWindow = new VBox();
+        mainWindow.setAlignment(Pos.CENTER);
+        mainWindow.getStylesheets().add("FlyweightCSS.css");
 
         Text message = new Text(array[fadeSwitch.getIncrementation()]);
         message.getStyleClass().add("credits");
@@ -297,8 +298,8 @@ public class UI extends Application{
 
         fadeOut.play();
 
-        box.getChildren().add(message);
+        mainWindow.getChildren().add(message);
 
-        return new Scene(box, WINDOW_WIDTH_AND_HEIGHT, WINDOW_WIDTH_AND_HEIGHT);
+        return new Scene(mainWindow, WINDOW_WIDTH_AND_HEIGHT, WINDOW_WIDTH_AND_HEIGHT);
     }
 }

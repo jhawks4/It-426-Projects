@@ -2,6 +2,10 @@
     -fx-background-color: #323232;
 }
 
+#firstScene{
+    -fx-background-image: url("starry-sky-clipart-18.jpg");
+}
+
 Text{
     -fx-fill: #ffffff;
 }
