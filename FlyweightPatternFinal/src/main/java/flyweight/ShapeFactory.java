@@ -38,7 +38,7 @@ public class ShapeFactory{
             circle = new Circle(color);
             shapeMap.put(color, circle);
         }else{
-            circle.setX(random.nextInt(560) + 10);
+            circle.setX(random.nextInt(576) + 10);
             circle.setY(random.nextInt(250) + 10);
         }
 
