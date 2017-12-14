@@ -43,6 +43,7 @@ import java.util.Random;
 public class UI extends Application{
 
     private static final int WINDOW_WIDTH_AND_HEIGHT = 600;
+    private static final int CREDIT_DURATION_BETWEEN_TRANSITIONS = 3;
     private File file = songSwitch(sceneNames.HOME);
     private Stage stage;
     private Media media;
@@ -263,8 +264,11 @@ public class UI extends Application{
         Text message = new Text(array[fadeSwitch.getIncrementation()]);
         message.getStyleClass().add("credits");
 
-        FadeTransition fadeOut = new FadeTransition(Duration.seconds(5), message);
-        FadeTransition fadeIn = new FadeTransition(Duration.seconds(5), message);
+        FadeTransition fadeOut = new FadeTransition(Duration.
+                                     seconds(CREDIT_DURATION_BETWEEN_TRANSITIONS), message);
+
+        FadeTransition fadeIn = new FadeTransition(Duration.
+                                    seconds(CREDIT_DURATION_BETWEEN_TRANSITIONS), message);
 
         fadeOut.setFromValue(1);
         fadeOut.setToValue(0);
